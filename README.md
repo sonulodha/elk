@@ -54,7 +54,9 @@ Deploy Kibana using the following command:
 
     kubectl get svc (check kibanan svc ip )
     
-    http:<ip>:5601
+ Open kibana dashboard 
+ 
+    http://<ip>:5601
 
     username: elastic
     password: kubectl get secrets --namespace=default elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d
