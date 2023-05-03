@@ -11,81 +11,58 @@ Before deploying the ELK stack, make sure you have the following prerequisites:
 
 Deployment
 
-    Clone the repository using the following command:
+Clone the repository using the following command:
+    
+    git clone https://github.com/sonulodha/elk.git
 
-bash
+Change the directory to the cloned repository:
 
-git clone https://github.com/sonulodha/elk.git
+    cd elk
 
-    Change the directory to the cloned repository:
+Deploy Filebeat using the following command:
 
-bash
+    cd filebeat
 
-cd elk
+    helm install filebeat .
 
-    Update the Elasticsearch Helm chart values.yml file to set antiAffinity from hard to soft:
+Deploy Logstash using the following command:
+    
+    cd ../logstash
 
-bash
+    helm install logstash .
 
-cd elasticsearch
-vim values.yml
+Check the status of the Logstash pod:
 
-Update the following parameter in the file:
+    kubectl get pod
 
-makefile
 
-antiAffinity: soft
+Deploy Elasticsearch using the following command:
 
-    Deploy Logstash using the following command:
+    cd ../elasticsearch
+    
+    helm install elasticsearch .
 
-bash
+Check the status of the Elasticsearch pod:
 
-cd logstash
-helm install logstash .
+    kubectl get pod
 
-    Check the status of the Logstash pod:
+Deploy Kibana using the following command:
 
-arduino
+    cd ../kibana
 
-kubectl get pod
+    helm install kibana .
 
-    Deploy Filebeat using the following command:
+    kubectl get svc (check kibanan svc ip )
+    
+    http:<ip>:5601
 
-bash
+    username: elastic
+    password: kubectl get secrets --namespace=default elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d
 
-cd ../filebeat
-helm install filebeat .
+Check the status of the Kibana pod:
+    
+    kubectl get pod
 
-    Deploy Elasticsearch using the following command:
+Verify that all the components of the ELK stack are running using the following command:
 
-bash
-
-cd ../elasticsearch
-helm install elasticsearch .
-
-    Check the status of the Elasticsearch pod:
-
-arduino
-
-kubectl get pod
-
-    Deploy Kibana using the following command:
-
-bash
-
-cd ../kibana
-helm install kibana .
-
-    Check the status of the Kibana pod:
-
-arduino
-
-kubectl get pod
-
-    Verify that all the components of the ELK stack are running using the following command:
-
-helm list
-
-Conclusion
-
-In this guide, we have deployed the ELK stack on Kubernetes using Helm charts. You can now use this stack to collect, store, and visualize your application logs.
+    helm list
