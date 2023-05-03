@@ -58,6 +58,7 @@ Deploy Kibana using the following command:
  
     http://<ip>:5601
 
+  Use Kibana username and password to login kibana dashoard
     username: elastic
     password: kubectl get secrets --namespace=default elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d
 
